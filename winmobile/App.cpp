@@ -1,11 +1,13 @@
 // UWP app shell: owns the window, feeds touch and the back button to the
-// game, gets the game data in place and runs Descent on its own thread.
+// game, gets the game data in place and runs Descent on its own thread. On a
+// PC it also feeds the keyboard and the mouse.
 
 #include <atomic>
 #include <collection.h>
 #include <ppltasks.h>
 #include <cwctype>
 #include <map>
+#include <set>
 #include <string>
 #include <thread>
 #include <vector>
@@ -18,12 +20,15 @@ using namespace Platform;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::ApplicationModel::Core;
+using namespace Windows::Devices::Input;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Graphics::Display;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Pickers;
 using namespace Windows::System;
+using namespace Windows::System::Profile;
+using namespace Windows::System::Threading;
 using namespace Windows::System::UserProfile;
 using namespace Windows::UI::Popups;
 using namespace Windows::UI::Core;
@@ -38,6 +43,14 @@ using namespace Windows::UI::ViewManagement;
 namespace {
 
 std::string Document_path_utf8, Cache_path_utf8, Data_path_utf8;
+
+// The mouse's movement while flying, taken by the game thread every frame
+std::atomic<int> Mouse_dx{0}, Mouse_dy{0};
+
+// A PC, as opposed to the phone: keyboard, mouse and a window of any shape
+bool is_desktop() {
+	return AnalyticsInfo::VersionInfo->DeviceFamily == L"Windows.Desktop";
+}
 
 // The files the game reads from the player's copy of Descent II
 const wchar_t *const kDataExtensions[] = {
@@ -194,6 +207,11 @@ public:
 		Display_scale = (float) DisplayInformation::GetForCurrentView()->RawPixelsPerViewPixel;
 		CreateEditContext();
 		the_app = this;
+
+		desktop_ = is_desktop();
+		if (desktop_) {
+			SetUpDesktop();
+		}
 	}
 
 	virtual void Load(String ^entryPoint) {
@@ -208,6 +226,104 @@ public:
 	}
 
 private:
+	// A PC plays with the keyboard and the mouse as the original game did; the
+	// touch controls only show up once the screen is touched
+	void SetUpDesktop() {
+		gles_set_turn_portrait(false);
+		Relative_mouse = 1;
+		Touch_controls_shown = 0;
+		arrow_ = window_->PointerCursor;
+
+		dispatcher_->AcceleratorKeyActivated +=
+				ref new TypedEventHandler<CoreDispatcher ^, AcceleratorKeyEventArgs ^>(
+						this, &App::OnAcceleratorKey);
+		window_->Activated += ref new TypedEventHandler<CoreWindow ^, WindowActivatedEventArgs ^>(
+				this, &App::OnWindowActivated);
+		MouseDevice::GetForCurrentView()->MouseMoved +=
+				ref new TypedEventHandler<MouseDevice ^, MouseEventArgs ^>(this, &App::OnMouseMoved);
+
+		// The game does not say when it starts or stops flying, so look often
+		TimeSpan period;
+		period.Duration = 1000000;  // 100 ms
+		CoreDispatcher ^dispatcher = dispatcher_;
+		flight_timer_ = ThreadPoolTimer::CreatePeriodicTimer(ref new TimerElapsedHandler(
+				[this, dispatcher](ThreadPoolTimer ^) {
+			dispatcher->RunAsync(CoreDispatcherPriority::Normal,
+					ref new DispatchedHandler([this] { UpdateFlying(); }));
+		}), period);
+	}
+
+	// While flying the mouse steers, so its pointer is hidden and its buttons
+	// fire; in menus it is the pointer again
+	void UpdateFlying() {
+		bool flying = started_ && in_game_view();
+		if (flying == flying_) {
+			return;
+		}
+		flying_ = flying;
+		window_->PointerCursor = flying ? nullptr : arrow_;
+		Mouse_dx = 0;
+		Mouse_dy = 0;
+		if (!flying) {
+			SetMouseButtons(false, false, false);
+		}
+	}
+
+	void SetMouseButtons(bool left, bool right, bool middle) {
+		const bool now[3] = {left, right, middle};
+		for (int i = 0; i < 3; ++i) {
+			if (mouse_buttons_[i] != now[i]) {
+				mouse_buttons_[i] = now[i];
+				mouse_button_handler(i, now[i]);
+			}
+		}
+	}
+
+	void OnMouseMoved(MouseDevice ^sender, MouseEventArgs ^args) {
+		if (flying_) {
+			Mouse_dx += args->MouseDelta.X;
+			Mouse_dy += args->MouseDelta.Y;
+		}
+	}
+
+	// Keys go to the game as the PC scan codes the original read, so the
+	// controls sit where they did whatever the keyboard layout. Text being
+	// typed goes through the edit context instead, see OnTextUpdating.
+	void OnAcceleratorKey(CoreDispatcher ^sender, AcceleratorKeyEventArgs ^args) {
+		CoreAcceleratorKeyEventType type = args->EventType;
+		bool down = type == CoreAcceleratorKeyEventType::KeyDown ||
+					type == CoreAcceleratorKeyEventType::SystemKeyDown;
+		bool up = type == CoreAcceleratorKeyEventType::KeyUp ||
+				  type == CoreAcceleratorKeyEventType::SystemKeyUp;
+		CorePhysicalKeyStatus status = args->KeyStatus;
+		unsigned char code = (unsigned char) ((status.ScanCode & 0x7F) |
+											  (status.IsExtendedKey ? 0x80 : 0));
+		if (!started_ || (status.ScanCode & 0x7F) == 0) {
+			return;
+		}
+		if (down) {
+			Touch_controls_shown = 0;
+			if (!text_active_) {
+				pressed_keys_.insert(code);
+				key_handler(code, true);
+			}
+		} else if (up && pressed_keys_.erase(code)) {
+			key_handler(code, false);
+		}
+	}
+
+	// Nothing stays held down while another window has the keyboard
+	void OnWindowActivated(CoreWindow ^sender, WindowActivatedEventArgs ^args) {
+		if (args->WindowActivationState != CoreWindowActivationState::Deactivated) {
+			return;
+		}
+		for (unsigned char code : pressed_keys_) {
+			key_handler(code, false);
+		}
+		pressed_keys_.clear();
+		SetMouseButtons(false, false, false);
+	}
+
 	void OnActivated(CoreApplicationView ^view, IActivatedEventArgs ^args) {
 		window_->Activate();
 		if (started_ || preparing_) {
@@ -373,6 +489,16 @@ private:
 		if (!started_) {
 			return;
 		}
+		if (desktop_) {
+			bool mouse = point->PointerDevice->PointerDeviceType == PointerDeviceType::Mouse;
+			Touch_controls_shown = !mouse;
+			if (mouse && flying_) {
+				PointerPointProperties ^buttons = point->Properties;
+				SetMouseButtons(buttons->IsLeftButtonPressed, buttons->IsRightButtonPressed,
+								buttons->IsMiddleButtonPressed);
+				return;
+			}
+		}
 		auto it = slots_.find(id);
 		if (it == slots_.end()) {
 			if (action != TOUCH_DOWN) {
@@ -397,6 +523,8 @@ private:
 		bool handled = touch_handler(action, touch.slot, x, y, touch.x, touch.y) != 0;
 		if (!handled && action != TOUCH_MOVE && point->Properties->IsPrimary) {
 			mouse_handler((short) x, (short) y, action == TOUCH_DOWN);
+			// A click that starts the game is let go of while flying
+			mouse_buttons_[0] = action == TOUCH_DOWN;
 		} else {
 			mouse_set_pos((short) x, (short) y);
 		}
@@ -467,11 +595,14 @@ private:
 	}
 
 	void OnKeyDown(CoreWindow ^sender, KeyEventArgs ^args) {
-		if (!started_) {
+		// On a PC the keys are passed on in OnAcceleratorKey, except while typing
+		if (!started_ || (desktop_ && !text_active_)) {
 			return;
 		}
 		if (args->VirtualKey == VirtualKey::Enter) {
 			press_key(KEY_ENTER);
+		} else if (args->VirtualKey == VirtualKey::Escape) {
+			press_key(KEY_ESC);
 		} else if (args->VirtualKey == VirtualKey::Back && text_active_) {
 			if (!text_.empty()) {
 				CoreTextRange removed = {(int) text_.size() - 1, (int) text_.size()};
@@ -523,6 +654,14 @@ private:
 	bool preparing_ = false;
 	bool data_ready_ = false;
 	bool started_ = false;
+
+	// PC only
+	bool desktop_ = false;
+	bool flying_ = false;
+	bool mouse_buttons_[3] = {};
+	std::set<unsigned char> pressed_keys_;
+	CoreCursor ^arrow_;
+	ThreadPoolTimer ^flight_timer_;
 };
 
 App ^App::the_app;
@@ -540,6 +679,11 @@ void activateText() {
 
 void deactivateText() {
 	App::the_app->SetTextActive(false);
+}
+
+void take_mouse_delta(int *dx, int *dy) {
+	*dx = Mouse_dx.exchange(0);
+	*dy = Mouse_dy.exchange(0);
 }
 
 }

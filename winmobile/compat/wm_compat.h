@@ -4,6 +4,9 @@
 
 #define _USE_MATH_DEFINES
 #include <stdint.h>
+// Some core files call malloc and realloc undeclared: fine on 32-bit ARM,
+// but on x64 the implicit int return cuts the pointer in half
+#include <stdlib.h>
 #include <string.h>
 
 typedef int64_t __int64_t;

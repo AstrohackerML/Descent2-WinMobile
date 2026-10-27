@@ -8,12 +8,12 @@
   <Identity
     Name="AstrohackerML.Descent2WinMobile"
     Publisher="CN=AstrohackerML"
-    Version="0.3.0.0" />
+    Version="0.3.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="fd7aaa5a-642b-4c9e-b622-9f6070feeabf" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Descent II</DisplayName>
+    <DisplayName>D2Engine</DisplayName>
     <PublisherDisplayName>AstrohackerML</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -31,10 +31,10 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="Descent2.App">
       <uap:VisualElements
-        DisplayName="Descent II"
+        DisplayName="D2Engine"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="Descent II for Windows 10 Mobile"
+        Description="D2Engine: a Descent II engine port that plays your own copy of the game"
         BackgroundColor="#000000">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#000000"/>

@@ -6,6 +6,7 @@
 #include <GLES/gl.h>
 
 #include <wrl/client.h>
+#include <atomic>
 #include <map>
 #include <mutex>
 #include <string.h>
@@ -81,6 +82,7 @@ struct WindowState {
 std::mutex window_lock;
 WindowState wanted_window = {1, 1, DXGI_MODE_ROTATION_IDENTITY};
 WindowState swap_chain_window;
+std::atomic<bool> turn_portrait{true};
 
 std::map<GLuint, Texture> textures;
 GLuint next_texture = 1;
@@ -401,7 +403,7 @@ WindowState get_wanted_window() {
 }
 
 bool is_portrait(const WindowState &w) {
-	return w.width < w.height;
+	return turn_portrait && w.width < w.height;
 }
 
 // The landscape frame in a portrait window is shown as in a landscape one
@@ -477,6 +479,10 @@ void gles_set_window(int width, int height, int rotation) {
 	wanted_window.width = width > 0 ? width : 1;
 	wanted_window.height = height > 0 ? height : 1;
 	wanted_window.rotation = rotation;
+}
+
+void gles_set_turn_portrait(bool turn) {
+	turn_portrait = turn;
 }
 
 void gles_window_to_frame(float x, float y, float *frame_x, float *frame_y) {

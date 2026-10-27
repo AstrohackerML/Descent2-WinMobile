@@ -1,6 +1,6 @@
 # D2Engine — данные для отправки в Microsoft Store
 
-Пакет: `AppPackages\Store\Descent2_1.0.0.0_ARM_bundle.appxupload` (собирается командой из README, раздел «Store build»).
+Пакет: `AppPackages\Store\Descent2_1.0.0.0_ARM_x64_bundle.appxupload` (ARM для телефона и x64 для ПК) (собирается командой из README, раздел «Store build»).
 
 Идентификатор в манифесте (`winmobile/Package.Store.appxmanifest`): `AstrohackerML.D2Engine`, издатель `CN=731ECEE4-03DC-405A-B788-3758C0ED0488`. Перед первой отправкой зарезервируйте в Partner Center имя **D2Engine** и сверьте значения в **Product management → Product identity**: `Package/Identity/Name` и `Package/Identity/Publisher` должны совпасть с манифестом. Если Partner Center выдал другое имя пакета, поправьте `Name` в манифесте и пересоберите.
 
@@ -30,11 +30,11 @@
 ## Пакеты (Packages)
 
 - Загрузить `.appxupload`.
-- Семейства устройств: отметить только **Windows 10 Mobile**. Пакет собран лишь для ARM32, на ПК его ставить незачем.
+- Семейства устройств: **Windows 10 Mobile** и **Windows 10/11 Desktop**. Team, Holographic и Xbox не отмечать.
 
 ## Примечания для сертификации (Notes for certification)
 
-> D2Engine is an engine port that plays the user's own copy of the 1996 PC game Descent II. It contains no game content. On first launch it asks the user to pick a folder with the Descent II data files (descent2.hog, descent2.ham, *.pig, descent2.s22) and copies them into the app's storage; without them the app shows a list of the missing files and lets the user pick another folder or quit. To test the game, use the data files of a PC copy of Descent II (for example from GOG or Steam). The app does not use the network.
+> D2Engine is an engine port that plays the user's own copy of the 1996 PC game Descent II. It contains no game content. On a phone it uses touch controls; on a PC the keyboard and the mouse. On first launch it asks the user to pick a folder with the Descent II data files (descent2.hog, descent2.ham, *.pig, descent2.s22) and copies them into the app's storage; without them the app shows a list of the missing files and lets the user pick another folder or quit. To test the game, use the data files of a PC copy of Descent II (for example from GOG or Steam). The app does not use the network.
 
 ---
 
@@ -46,9 +46,9 @@
 
 **Описание**
 
-D2Engine — порт движка игры Descent II (1996) для телефонов с Windows 10 Mobile. Приложение не содержит игровых данных: для игры нужны файлы вашей копии Descent II для ПК (например, из GOG или Steam).
+D2Engine — порт движка игры Descent II (1996) для телефонов с Windows 10 Mobile и для ПК с Windows 10/11. Приложение не содержит игровых данных: для игры нужны файлы вашей копии Descent II для ПК (например, из GOG или Steam).
 
-• Полная игра с сенсорным управлением.
+• Полная игра: сенсорное управление на телефоне, клавиатура и мышь на ПК.
 • Экранная клавиатура для имени пилота и сохранений.
 • Звук, ролики со звуком и MIDI-музыка.
 • Сохранение и загрузка игры.
@@ -92,9 +92,9 @@ A Descent II engine for Windows 10 Mobile: play your own copy of the classic sho
 
 **Description**
 
-D2Engine is a port of the Descent II (1996) game engine to Windows 10 Mobile phones. It contains no game data: you need the files of your own PC copy of Descent II (for example from GOG or Steam).
+D2Engine is a port of the Descent II (1996) game engine to Windows 10 Mobile phones and Windows 10/11 PCs. It contains no game data: you need the files of your own PC copy of Descent II (for example from GOG or Steam).
 
-• The full game with touch controls.
+• The full game: touch controls on a phone, keyboard and mouse on a PC.
 • On-screen keyboard for pilot and save names.
 • Sound, movies with sound and MIDI music.
 • Saving and loading.

@@ -146,28 +146,36 @@ static int Mouse_installed = 0;
 static double last_roll, last_pitch, last_yaw;
 int touch_dx = 0, touch_dy = 0;
 
+#ifdef WINMOBILE
+// See winmobile/platform.h
+int Relative_mouse = 0;
+void take_mouse_delta(int *dx, int *dy);
+#endif
+
 #pragma off (check_stack)
-void mouse_handler (short x, short y, bool down) {
+void mouse_button_handler (int button, bool down) {
 	Mouse.ctime = timer_get_fixed_secondsX();
-	
-	if (down) {	// left button pressed
-		if (!Mouse.pressed[MB_LEFT]) {
-			Mouse.pressed[MB_LEFT] = 1;
-			Mouse.time_went_down[MB_LEFT] = Mouse.ctime;
-			Mouse.x_info.x = x;
-			Mouse.x_info.y = y;
+
+	if (down) {
+		if (!Mouse.pressed[button]) {
+			Mouse.pressed[button] = 1;
+			Mouse.time_went_down[button] = Mouse.ctime;
 		}
-		Mouse.num_downs[MB_LEFT]++;
+		Mouse.num_downs[button]++;
 	}
-	else {  // left button released
-		if (Mouse.pressed[MB_LEFT]) {
-			Mouse.pressed[MB_LEFT] = 0;
-			Mouse.time_held_down[MB_LEFT] += Mouse.ctime - Mouse.time_went_down[MB_LEFT];
-			Mouse.x_info.x = x;
-			Mouse.x_info.y = y;
+	else {
+		if (Mouse.pressed[button]) {
+			Mouse.pressed[button] = 0;
+			Mouse.time_held_down[button] += Mouse.ctime - Mouse.time_went_down[button];
 		}
-		Mouse.num_ups[MB_LEFT]++;
+		Mouse.num_ups[button]++;
 	}
+}
+
+void mouse_handler (short x, short y, bool down) {
+	Mouse.x_info.x = x;
+	Mouse.x_info.y = y;
+	mouse_button_handler(MB_LEFT, down);
 }
 
 void mouse_handler_end (void)  // dummy functions
@@ -237,6 +245,13 @@ void mouse_get_delta( int *dx, int *dy, int *dz)
 		*dx = *dy = 0;
 		return;
 	}
+#ifdef WINMOBILE
+	if (Relative_mouse) {
+		take_mouse_delta(dx, dy);
+		*dz = 0;
+		return;
+	}
+#endif
 	*dx = touch_dx * 3;
 	*dy = touch_dy * 4;
 	

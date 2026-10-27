@@ -47,6 +47,8 @@ typedef struct GameButton {
 	char *label;
 } GameButton;
 
+int Touch_controls_shown = 1;
+
 static GameButton buttons[NUM_BUTTONS];
 static int touchButtons[MAX_TOUCHES];
 static int trackingTouch;
@@ -142,7 +144,7 @@ void draw_buttons() {
 	grs_font *save_font;
 	ubyte save_pal[3];
 
-	if (Game_mode == GM_NORMAL && !In_screen) {
+	if (Touch_controls_shown && in_game_view()) {
 		save_canv = grd_curcanv;
 		gr_set_current_canvas(NULL);
 		memcpy(save_pal, gr_current_pal, sizeof(ubyte) * 3);
@@ -322,8 +324,12 @@ void handle_move(int pointerId, float x, float y, float prevX, float prevY) {
 	}
 }
 
+int in_game_view() {
+	return Game_mode == GM_NORMAL && !In_screen;
+}
+
 int touch_handler(int action, int pointer_id, float x, float y, float prev_x, float prev_y) {
-	if (Game_mode == GM_NORMAL && !In_screen) {
+	if (Touch_controls_shown && in_game_view()) {
 		switch (action) {
 			case TOUCH_DOWN:
 				handle_down(pointer_id, x, y);

@@ -17,6 +17,11 @@ bool gles_init(IUnknown *core_window, int width, int height);
 // thread; set it before gles_init and whenever the window changes.
 void gles_set_window(int width, int height, int rotation);
 
+// Whether a portrait window shows the landscape frame turned (the phone, the
+// default) or just stretched to it (a PC, where a narrow window is no reason
+// to turn the picture)
+void gles_set_turn_portrait(bool turn);
+
 // A point of the window in physical pixels as a point of the game's frame.
 // The frame stays landscape and is shown turned in a portrait window.
 void gles_window_to_frame(float x, float y, float *frame_x, float *frame_y);

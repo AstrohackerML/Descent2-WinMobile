@@ -20,10 +20,24 @@ void draw_buttons(void);
 // Touch events in physical pixels; returns 1 if the touch controls took it
 int touch_handler(int action, int pointer_id, float x, float y, float prev_x, float prev_y);
 
+// Whether the on-screen controls are drawn and take touches. Always on the
+// phone; on a PC only after the screen is touched.
+extern int Touch_controls_shown;
+
+// 1 while the player flies, as opposed to menus, briefings and the automap
+int in_game_view(void);
+
 // The core defines bool as int, hence int for these flags
 void key_handler(unsigned char scancode, int down);
 void mouse_handler(short x, short y, int down);
+void mouse_button_handler(int button, int down);
 void mouse_set_pos(short x, short y);
+
+// On a PC the ship turns with the mouse's own movement, not with drags:
+// set Relative_mouse and mouse_get_delta takes the movement from
+// take_mouse_delta (App.cpp) instead
+extern int Relative_mouse;
+void take_mouse_delta(int *dx, int *dy);
 
 // Touch pointer ids passed to touch_handler are slots below this
 #define MAX_TOUCHES 10

@@ -1,15 +1,17 @@
-Descent II for Windows 10 Mobile
-================================
+D2Engine: Descent II for Windows 10 Mobile
+==========================================
 
-A source port of the original DOS/Windows/Mac game "Descent II" for Windows 10 Mobile phones (UWP, ARM), made on and for the HP Elite x3. It is based on the [Android port](https://github.com/AstrohackerML/Descent2-Mobile). You will need the game files from a licensed copy of Descent II in order to play.
+D2Engine is a source port of the original DOS/Windows/Mac game "Descent II" for Windows 10 Mobile phones (UWP, ARM), made on and for the HP Elite x3. It is based on the [Android port](https://github.com/AstrohackerML/Descent2-Mobile). You will need the game files from a licensed copy of Descent II in order to play.
 
-What works: the full game with touch controls, the on-screen keyboard for pilot and save names, sound effects, movies with sound and MIDI music.
+What works: the full game with touch controls, the on-screen keyboard for pilot and save names, sound effects, movies with sound and MIDI music. The same app also runs on a Windows 10/11 PC (x64) with the keyboard and the mouse.
 
 Not yet: Redbook (CD) music, the gyroscope, multiplayer.
 
 Licence
 -------
 Please see "COPYING". The original Parallax licence allows non-commercial use only.
+
+D2Engine is an unofficial project, not affiliated with Interplay or Parallax Software. Descent is a trademark of Interplay Entertainment; the name is used here only to say which game the engine plays.
 
 Installing
 ----------
@@ -73,9 +75,13 @@ The package and its dependencies end up in `AppPackages/Descent2/`.
 
 The Microsoft Store version is called **D2Engine** and has its own manifest, `winmobile/Package.Store.appxmanifest`, with the Partner Center identity. `StoreBuild=true` switches to it and to the Store signing key `winmobile/D2Engine_StoreKey.pfx` (not in the repository; its subject must be the Partner Center publisher), and builds in separate folders:
 
-    MSBuild Descent2-WinMobile.sln -p:Configuration=Release -p:Platform=ARM -p:StoreBuild=true -p:UapAppxPackageBuildMode=StoreUpload -p:AppxBundle=Always -p:AppxBundlePlatforms=ARM -p:AppxPackageDir=<repo>\AppPackages\Store\
+    MSBuild Descent2-WinMobile.sln -p:Configuration=Release -p:Platform=ARM -p:StoreBuild=true -p:UapAppxPackageBuildMode=StoreUpload -p:AppxBundle=Always "-p:AppxBundlePlatforms=ARM|x64" -p:AppxPackageDir=<repo>\AppPackages\Store\
 
-This writes the `.appxupload` for Partner Center to `AppPackages/Store/`. The store listing texts and submission notes are in `store/listing.md`.
+This writes the `.appxupload` for Partner Center to `AppPackages/Store/`, with the phone (ARM) and PC (x64) packages. The store listing texts and submission notes are in `store/listing.md`.
+
+### On a PC
+
+The x64 build runs on Windows 10 and 11 PCs. There the game takes the keyboard and the mouse as the original did: keys by their position (scan codes), the mouse steers while flying (pick **Mouse** in **Options → Controls**) and its buttons fire. The touch controls show up only after the screen is touched, and a narrow window does not turn the picture.
 
 ### How it is put together
 

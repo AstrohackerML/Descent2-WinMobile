@@ -65,7 +65,9 @@ openfont open_font[MAX_OPEN_FONTS];
 
 #define BITS_TO_BYTES(x)    (((x)+7)>>3)
 
-#if defined(__LP64__)
+// 64-bit pointers make the header bigger in memory than on disk; MSVC calls
+// that _WIN64, as its long stays 32-bit
+#if defined(__LP64__) || defined(_WIN64)
 #define FONT_HEADER_OFFSET 24
 #else
 #define FONT_HEADER_OFFSET 8
