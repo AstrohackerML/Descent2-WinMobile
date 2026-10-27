@@ -1,6 +1,6 @@
 # D2Engine — данные для отправки в Microsoft Store
 
-Пакет: `AppPackages\Store\Descent2_1.0.0.0_ARM_x64_bundle.appxupload` (ARM для телефона и x64 для ПК) (собирается командой из README, раздел «Store build»).
+Пакет: `AppPackages\Store\Descent2_1.0.1.0_ARM_x64_bundle.appxupload` (ARM для телефона и x64 для ПК) (собирается командой из README, раздел «Store build»).
 
 Идентификатор в манифесте (`winmobile/Package.Store.appxmanifest`): `AstrohackerML.D2Engine`, издатель `CN=731ECEE4-03DC-405A-B788-3758C0ED0488`. Перед первой отправкой зарезервируйте в Partner Center имя **D2Engine** и сверьте значения в **Product management → Product identity**: `Package/Identity/Name` и `Package/Identity/Publisher` должны совпасть с манифестом. Если Partner Center выдал другое имя пакета, поправьте `Name` в манифесте и пересоберите.
 
