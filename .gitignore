@@ -175,7 +175,10 @@ winmobile/x64/
 winmobile/Generated Files/
 AppPackages/
 winmobile/BundleArtifacts/
+winmobile/_pkginfo.txt
 ARM/
 x64/
 # Local signing key for sideloading; make your own (see README)
 winmobile/Descent2_TemporaryKey.pfx
+# The Store build signing key (Partner Center publisher)
+winmobile/D2Engine_StoreKey.pfx

@@ -50,6 +50,13 @@
     <PackageCertificateKeyFile>Descent2_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
   </PropertyGroup>
+  <!-- StoreBuild=true makes D2Engine for the Microsoft Store under the Partner Center
+       identity (Package.Store.appxmanifest), built apart from the GitHub one -->
+  <PropertyGroup Condition="'$(StoreBuild)'=='true'">
+    <PackageCertificateKeyFile>D2Engine_StoreKey.pfx</PackageCertificateKeyFile>
+    <IntDir>$(Platform)\$(Configuration)Store\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)Store\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>compat;.;$(IntDir);..\2d;..\2d\ogles;..\3d;..\3d\ogles;..\cfile;..\fix;..\iff;..\io;..\libmve;..\main;..\mem;..\misc;..\pa_null;..\texmap;..\texmap\ogles;..\ui;..\vecmat;..\Descent2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -1147,7 +1154,10 @@
     <None Include="shaders\common.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest">
+    <AppxManifest Include="Package.appxmanifest" Condition="'$(StoreBuild)'!='true'">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <AppxManifest Include="Package.Store.appxmanifest" Condition="'$(StoreBuild)'=='true'">
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="Descent2_TemporaryKey.pfx" />

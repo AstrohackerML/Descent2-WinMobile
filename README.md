@@ -69,6 +69,14 @@ Packages are signed with `winmobile/Descent2_TemporaryKey.pfx`, which is not par
 
 The package and its dependencies end up in `AppPackages/Descent2/`.
 
+### Store build
+
+The Microsoft Store version is called **D2Engine** and has its own manifest, `winmobile/Package.Store.appxmanifest`, with the Partner Center identity. `StoreBuild=true` switches to it and to the Store signing key `winmobile/D2Engine_StoreKey.pfx` (not in the repository; its subject must be the Partner Center publisher), and builds in separate folders:
+
+    MSBuild Descent2-WinMobile.sln -p:Configuration=Release -p:Platform=ARM -p:StoreBuild=true -p:UapAppxPackageBuildMode=StoreUpload -p:AppxBundle=Always -p:AppxBundlePlatforms=ARM -p:AppxPackageDir=<repo>\AppPackages\Store\
+
+This writes the `.appxupload` for Partner Center to `AppPackages/Store/`. The store listing texts and submission notes are in `store/listing.md`.
+
 ### How it is put together
 
 - The game renders with the OpenGL ES 1.x subset of the Android port. `winmobile/gles_d3d11.cpp` emulates it on Direct3D 11 and turns the frame to the phone's portrait panel itself.
