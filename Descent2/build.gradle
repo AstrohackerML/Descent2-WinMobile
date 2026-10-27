@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+android {
+	namespace "astrohacker.descent2"
+	compileSdk 36
+	ndkVersion "21.4.7075529"
+	defaultConfig {
+		minSdk 16
+		targetSdk 31
+		externalNativeBuild {
+			cmake {
+				cFlags "-DANDROID_NDK", "-DDISABLE_IMPORTGL", "-DOGLES", "-DNASM", "-DNETWORK"
+			}
+		}
+	}
+	signingConfigs {
+		// The release key stays out of the repository. Put its location and
+		// passwords in ~/.gradle/gradle.properties; without them the release
+		// APK is left unsigned.
+		if (project.hasProperty("DESCENT2_STORE_FILE")) {
+			release {
+				storeFile file(project.property("DESCENT2_STORE_FILE"))
+				storePassword project.property("DESCENT2_STORE_PASSWORD")
+				keyAlias project.property("DESCENT2_KEY_ALIAS")
+				keyPassword project.property("DESCENT2_KEY_PASSWORD")
+			}
+		}
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+			if (project.hasProperty("DESCENT2_STORE_FILE")) {
+				signingConfig signingConfigs.release
+			}
+			externalNativeBuild {
+				cmake {
+					// -DRELEASE is deliberately NOT defined. It switches the menu
+					// background to the "\x01scores.pcx" (hog-only) path, which fails
+					// to load here; with NDEBUG the Assert() that would have caught it
+					// is compiled out, so the game SIGSEGVs in newmenu_do4() as soon as
+					// you pick NEW GAME.
+					cFlags.addAll(["-DNDEBUG"])
+					// The original Descent 2 sources miscompile at -O1 and above:
+					// descent_main() returns immediately at startup and the game
+					// shows a black screen. Pin the release build to -O0.
+					arguments "-DCMAKE_C_FLAGS_RELWITHDEBINFO=-O0 -g -DNDEBUG"
+				}
+			}
+		}
+	}
+	externalNativeBuild {
+		cmake {
+			path "src/main/cpp/CMakeLists.txt"
+			version "3.18.1"
+		}
+	}
+	lint {
+		// Raising targetSdk changes runtime behaviour (storage access etc.);
+		// keep 31 until that has been tested on device.
+		disable "ExpiredTargetSdkVersion"
+	}
+	splits {
+		abi {
+			enable true
+			reset()
+			include "arm64-v8a", "armeabi-v7a", "x86", "x86_64"
+			universalApk false
+		}
+	}
+}

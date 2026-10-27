@@ -1,0 +1,1165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the source lists of the former CMake build; see README -->
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C81438B5-3823-430F-9AD4-8450B03E2048}</ProjectGuid>
+    <RootNamespace>Descent2</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.15063.0</WindowsTargetPlatformMinVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <!-- The newest VS 2017 toolset (14.16) dropped the 32-bit ARM compiler the phone needs -->
+    <VCToolsVersion>14.14.26428</VCToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup>
+    <TargetName>Descent2</TargetName>
+    <PackageCertificateKeyFile>Descent2_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>compat;.;$(IntDir);..\2d;..\2d\ogles;..\3d;..\3d\ogles;..\cfile;..\fix;..\iff;..\io;..\libmve;..\main;..\mem;..\misc;..\pa_null;..\texmap;..\texmap\ogles;..\ui;..\vecmat;..\Descent2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>false</SDLCheck>
+      <WarningLevel>Level3</WarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <ClCompile Condition="'$(Configuration)'=='Release'">
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <FxCompile>
+      <ShaderModel>4.0_level_9_3</ShaderModel>
+      <HeaderFileOutput>$(IntDir)%(Filename).h</HeaderFileOutput>
+      <VariableName>g_%(Filename)</VariableName>
+      <ObjectFileOutput />
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="App.cpp">
+      <CompileAsWinRT>true</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="gles_d3d11.cpp" />
+    <ClCompile Include="music.cpp">
+      <CompileAsWinRT>true</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="opensl_xaudio2.cpp" />
+    <ClCompile Include="platform.cpp" />
+    <ClCompile Include="controls.c">
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="posix.c">
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemGroup>
+  <!-- The game itself -->
+  <ItemGroup>
+    <ClCompile Include="..\2d\bitblt.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\bitmap.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\box.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\canvas.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\circle.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\disc.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\effects.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\font.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\gpixel.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\gr.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\ibitblt.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\lbitblt.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\linear.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\line.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\macstubs.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\palette.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\pcx.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\pixel.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\poly.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\rect.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\rle.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\scale.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\scanline.c">
+      <ObjectFileName>$(IntDir)core\2d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\ogles\bitbltogles.c">
+      <ObjectFileName>$(IntDir)core\2d\ogles\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\ogles\fontogles.c">
+      <ObjectFileName>$(IntDir)core\2d\ogles\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\ogles\rectogles.c">
+      <ObjectFileName>$(IntDir)core\2d\ogles\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\2d\ogles\scaleogles.c">
+      <ObjectFileName>$(IntDir)core\2d\ogles\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\clipper.c">
+      <ObjectFileName>$(IntDir)core\3d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\draw.c">
+      <ObjectFileName>$(IntDir)core\3d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\globvars.c">
+      <ObjectFileName>$(IntDir)core\3d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\instance.c">
+      <ObjectFileName>$(IntDir)core\3d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\interp.c">
+      <ObjectFileName>$(IntDir)core\3d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\matrix.c">
+      <ObjectFileName>$(IntDir)core\3d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\points.c">
+      <ObjectFileName>$(IntDir)core\3d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\rod.c">
+      <ObjectFileName>$(IntDir)core\3d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\setup.c">
+      <ObjectFileName>$(IntDir)core\3d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\upvecs2.c">
+      <ObjectFileName>$(IntDir)core\3d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\upvecs.c">
+      <ObjectFileName>$(IntDir)core\3d\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\ogles\drawogles.c">
+      <ObjectFileName>$(IntDir)core\3d\ogles\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\ogles\rodogles.c">
+      <ObjectFileName>$(IntDir)core\3d\ogles\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\3d\ogles\setupogles.c">
+      <ObjectFileName>$(IntDir)core\3d\ogles\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\cfile\cfile.c">
+      <ObjectFileName>$(IntDir)core\cfile\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\fix\fix.c">
+      <ObjectFileName>$(IntDir)core\fix\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\fix\tables.c">
+      <ObjectFileName>$(IntDir)core\fix\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\iff\iff.c">
+      <ObjectFileName>$(IntDir)core\iff\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\io\dpmi.c">
+      <ObjectFileName>$(IntDir)core\io\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\io\ipx.c">
+      <ObjectFileName>$(IntDir)core\io\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\io\joy.c">
+      <ObjectFileName>$(IntDir)core\io\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\io\key.c">
+      <ObjectFileName>$(IntDir)core\io\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\io\mono.c">
+      <ObjectFileName>$(IntDir)core\io\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\io\mouse.c">
+      <ObjectFileName>$(IntDir)core\io\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\io\timer.c">
+      <ObjectFileName>$(IntDir)core\io\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\libmve\decoder16.c">
+      <ObjectFileName>$(IntDir)core\libmve\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\libmve\decoder8.c">
+      <ObjectFileName>$(IntDir)core\libmve\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\libmve\mveaudio.c">
+      <ObjectFileName>$(IntDir)core\libmve\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\libmve\mvelib.c">
+      <ObjectFileName>$(IntDir)core\libmve\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\libmve\mveplay.c">
+      <ObjectFileName>$(IntDir)core\libmve\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\3dfx.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\ai2.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\ai.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\aipath.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\automap.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\bm.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\bmread.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\cdmix32.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\cntrlcen.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\collide.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\config.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\controls.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\credits.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\crypt.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\dumpmine.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\effects.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\endlevel.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\escort.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\fireball.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\fuelcen.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\fvi.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\game.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\gamecntl.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\gamefont.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\gamemine.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\gamepal.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\gamerend.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\gamesave.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\gameseg.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\gameseq.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\gauges.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\hmp.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\hostage.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\hud.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\iglasses.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\inferno.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\joydefs.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\kconfig.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\kmatrix.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\laser.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\lighting.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\menu.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\mglobal.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\mission.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\modem.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\morph.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\movie.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\multibot.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\multi.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\netmisc.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\network.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\newdemo.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\newmenu.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\object.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\paging.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\physics.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\piggy.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\playsave.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\polyobj.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\powerup.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\render.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\robot.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\scores.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\slew.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\songs.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\state.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\switch.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\terrain.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\texmerge.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\text.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\titles.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\vclip.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\vfx.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\victor.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\wall.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\weapon.c">
+      <ObjectFileName>$(IntDir)core\main\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\mem\mem.c">
+      <ObjectFileName>$(IntDir)core\mem\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\misc\args.c">
+      <ObjectFileName>$(IntDir)core\misc\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\misc\byteswap.c">
+      <ObjectFileName>$(IntDir)core\misc\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\misc\error.c">
+      <ObjectFileName>$(IntDir)core\misc\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\misc\hash.c">
+      <ObjectFileName>$(IntDir)core\misc\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\misc\parsarg.c">
+      <ObjectFileName>$(IntDir)core\misc\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\misc\strutil.c">
+      <ObjectFileName>$(IntDir)core\misc\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\pa_null\poly_acc.c">
+      <ObjectFileName>$(IntDir)core\pa_null\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\texmap\ntmap.c">
+      <ObjectFileName>$(IntDir)core\texmap\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\texmap\scanline.c">
+      <ObjectFileName>$(IntDir)core\texmap\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\texmap\tmapflat.c">
+      <ObjectFileName>$(IntDir)core\texmap\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\texmap\ogles\oglestex.c">
+      <ObjectFileName>$(IntDir)core\texmap\ogles\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\barbox.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\button.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\checkbox.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\file.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\func.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\gadget.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\icon.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\inputbox.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\keypad.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\keypress.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\keytrap.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\listbox.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\menubar.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\menu.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\message.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\mouse.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\number.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\popup.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\radio.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\scroll.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\ui.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\uidraw.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\userbox.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\ui\window.c">
+      <ObjectFileName>$(IntDir)core\ui\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\vecmat\vecmatc.c">
+      <ObjectFileName>$(IntDir)core\vecmat\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="..\main\android\digi.c">
+      <ObjectFileName>$(IntDir)core\main\android\</ObjectFileName>
+      <ForcedIncludeFiles>wm_compat.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>ANDROID_NDK;DISABLE_IMPORTGL;OGLES;NASM;WINMOBILE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level1</WarningLevel>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gles_d3d11.h" />
+    <ClInclude Include="platform.h" />
+    <ClInclude Include="compat\wm_compat.h" />
+    <ClInclude Include="compat\dirent.h" />
+    <ClInclude Include="compat\unistd.h" />
+    <ClInclude Include="compat\GLES\gl.h" />
+    <ClInclude Include="compat\SLES\OpenSLES_Android.h" />
+    <ClInclude Include="compat\linux\limits.h" />
+    <ClInclude Include="compat\sys\time.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shaders\vs.hlsl">
+      <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="shaders\ps_color.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="shaders\ps_texture.hlsl">
+      <ShaderType>Pixel</ShaderType>
+    </FxCompile>
+    <None Include="shaders\common.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="Descent2_TemporaryKey.pfx" />
+    <Image Include="Assets\SplashScreen.png" />
+    <Image Include="Assets\Square150x150Logo.png" />
+    <Image Include="Assets\Square44x44Logo.png" />
+    <Image Include="Assets\StoreLogo.png" />
+    <Image Include="Assets\Wide310x150Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The General MIDI sound set MidiSynthesizer plays music with -->
+    <SDKReference Include="Microsoft.Midi.GmDls, Version=10.0.19041.0" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

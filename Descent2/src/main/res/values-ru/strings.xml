@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="data_title">Нужны файлы игры Descent II</string>
+	<string name="data_message">Это приложение — только движок игры. Чтобы играть, нужны файлы данных из вашей копии Descent II для PC (например, из GOG или Steam):\n\ndescent2.hog, descent2.ham, descent2.s22 (или descent2.s11), alien1.pig, alien2.pig, fire.pig, groupa.pig, ice.pig, water.pig\n\nРолики (*.mvl) необязательны. Скопируйте папку с игрой на устройство и выберите её ниже; вложенные папки тоже просматриваются.</string>
+	<string name="data_message_manual">На этой версии Android выбрать папку нельзя. Скопируйте файлы по USB в папку:\n%1$s\nи нажмите «Проверить снова».</string>
+	<string name="data_choose">Выбрать папку с игрой</string>
+	<string name="data_check">Проверить снова</string>
+	<string name="data_copying">Копирование данных… %1$d из %2$d МБ</string>
+	<string name="data_missing">Не найдены файлы:\n%1$s</string>
+	<string name="data_failed">Ошибка копирования: %1$s</string>
+	<string name="data_no_space">Недостаточно места: нужно %1$d МБ</string>
+</resources>

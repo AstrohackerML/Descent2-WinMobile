@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Descent II</string>
+	<string name="data_title">Descent II game data needed</string>
+	<string name="data_message">This app is only the game engine. To play, you need the data files from your own copy of Descent II for PC (for example from GOG or Steam):\n\ndescent2.hog, descent2.ham, descent2.s22 (or descent2.s11), alien1.pig, alien2.pig, fire.pig, groupa.pig, ice.pig, water.pig\n\nMovies (*.mvl) are optional. Copy the game folder to this device and pick it below; subfolders are searched too.</string>
+	<string name="data_message_manual">This Android version cannot pick a folder. Copy the files over USB into:\n%1$s\nthen tap \"Check again\".</string>
+	<string name="data_choose">Choose game folder</string>
+	<string name="data_check">Check again</string>
+	<string name="data_copying">Copying game data… %1$d of %2$d MB</string>
+	<string name="data_missing">These files were not found:\n%1$s</string>
+	<string name="data_failed">Copying failed: %1$s</string>
+	<string name="data_no_space">Not enough free space: %1$d MB needed</string>
+</resources>
