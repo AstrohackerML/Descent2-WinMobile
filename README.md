@@ -9,7 +9,7 @@ Not yet: Redbook (CD) music, the gyroscope, multiplayer.
 
 Licence
 -------
-Please see "COPYING". The original Parallax licence allows non-commercial use only.
+GPLv3, with an exception for the original Parallax code, which may be used for non-commercial purposes only. Please see "COPYING" and "GPL-3".
 
 D2Engine is an unofficial project, not affiliated with Interplay or Parallax Software. Descent is a trademark of Interplay Entertainment; the name is used here only to say which game the engine plays.
 
@@ -96,6 +96,6 @@ Please see the "Issues" section in GitHub.
 
 Special Thanks
 --------------
-- Devin Tuchsen for Descent2-iOS, the base of the Android port
+- Devin Tuchsen for Descent2-iOS and [Descent II Mobile](https://github.com/devint1/Descent2-Mobile), the Android port this one is based on
 - HMP to MIDI conversion code - Hans de Goede, d1x project
 - LIBMVE, d2x project contributors

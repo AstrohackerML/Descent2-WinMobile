@@ -2,6 +2,12 @@ Descent2-iOS LICENSE
 ====================
 This is based on the D2X license.
 
+D2Engine (Descent2-WinMobile) is based on Descent II Mobile, the Android
+port of Descent2-iOS.  Contributions from the Descent II Mobile and D2Engine
+projects are copyright their respective contributors and are conveyed under
+the same terms as the Descent2-iOS contributions below: the GPLv3 with the
+special exception for the original Parallax license.
+
 The original Descent II source release is copyright by Parallax and subject
 to the Parallax license below.  Contributions from the D1X/D2X ("DXX"),
 D1X-Rebirth/D2X-Rebirth ("Rebirth"), and Descent2-iOS projects are copyright their
@@ -52,7 +58,7 @@ permission under which you convey the material originally copyright by
 Parallax.
 
 
-See GPL-3.txt for further details on the GPLv3.
+See GPL-3 for further details on the GPLv3.
 For project history and it's contributors, please visit the
 D2X GIT repository at https://github.com/btb/d2x 
 or the Descent2-iOS repository at https://github.com/devint1/Descent2-iOS
