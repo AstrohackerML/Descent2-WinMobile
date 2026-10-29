@@ -1,7 +1,7 @@
 D2Engine: Descent II for Windows 10 Mobile
 ==========================================
 
-D2Engine is a source port of the original DOS/Windows/Mac game "Descent II" for Windows 10 Mobile phones (UWP, ARM), made on and for the HP Elite x3. It is based on the [Android port](https://github.com/AstrohackerML/Descent2-Mobile). You will need the game files from a licensed copy of Descent II in order to play.
+D2Engine is a source port of the original DOS/Windows game "Descent II" for Windows 10 Mobile phones (UWP, ARM), made on and for the HP Elite x3. It is based on the [Android port](https://github.com/AstrohackerML/Descent2-Mobile). You will need the game files from a licensed copy of Descent II in order to play.
 
 What works: the full game with touch controls, the on-screen keyboard for pilot and save names, sound effects, movies with sound and MIDI music. The same app also runs on a Windows 10/11 PC (x64) with the keyboard and the mouse.
 
@@ -96,6 +96,4 @@ Please see the "Issues" section in GitHub.
 
 Special Thanks
 --------------
-- Devin Tuchsen for Descent2-iOS and [Descent II Mobile](https://github.com/devint1/Descent2-Mobile), the Android port this one is based on
-- HMP to MIDI conversion code - Hans de Goede, d1x project
-- LIBMVE, d2x project contributors
+- Devin Tuchsen
