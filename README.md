@@ -15,7 +15,9 @@ D2Engine is an unofficial project, not affiliated with Interplay or Parallax Sof
 
 Installing
 ----------
-Download the latest release from the [Releases](../../releases) page. It has two archives: `D2Engine-<version>-ARM.zip` for the phone and `D2Engine-<version>-x64.zip` for a PC.
+The easiest way is the Microsoft Store: [D2Engine](https://apps.microsoft.com/detail/9PKHNMMG7BF2), for Windows 10 Mobile phones and Windows 10/11 PCs. On a phone the Store web page may not open the app; search for **D2Engine** in the Store app, or install it from **My Library** if you have got it on a PC with the same Microsoft account.
+
+To install it by hand, download the latest release from the [Releases](../../releases) page. It has two archives: `D2Engine-<version>-ARM.zip` for the phone and `D2Engine-<version>-x64.zip` for a PC. The Store version and this one are separate apps, each with its own copy of the game files and its own saves.
 
 ### On the phone
 
@@ -94,7 +96,7 @@ The sideload build above with `-p:Platform=x64` makes the PC package. It ends up
 
 ### Store build
 
-The Microsoft Store version is called **D2Engine** and has its own manifest, `winmobile/Package.Store.appxmanifest`, with the Partner Center identity. `StoreBuild=true` switches to it and to the Store signing key `winmobile/D2Engine_StoreKey.pfx` (not in the repository; its subject must be the Partner Center publisher), and builds in separate folders:
+The [Microsoft Store version](https://apps.microsoft.com/detail/9PKHNMMG7BF2) is built from the same code and has its own manifest, `winmobile/Package.Store.appxmanifest`, with the Partner Center identity. `StoreBuild=true` switches to it and to the Store signing key `winmobile/D2Engine_StoreKey.pfx` (not in the repository; its subject must be the Partner Center publisher), and builds in separate folders:
 
     MSBuild Descent2-WinMobile.sln -p:Configuration=Release -p:Platform=ARM -p:StoreBuild=true -p:UapAppxPackageBuildMode=StoreUpload -p:AppxBundle=Always "-p:AppxBundlePlatforms=ARM|x64" -p:AppxPackageDir=<repo>\AppPackages\Store\
 
