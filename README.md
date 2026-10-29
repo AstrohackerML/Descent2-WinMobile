@@ -15,13 +15,15 @@ D2Engine is an unofficial project, not affiliated with Interplay or Parallax Sof
 
 Installing
 ----------
-Download the latest release from the [Releases](../../releases) page and unpack it. It contains:
+Download the latest release from the [Releases](../../releases) page. It has two archives: `D2Engine-<version>-ARM.zip` for the phone and `D2Engine-<version>-x64.zip` for a PC.
+
+### On the phone
+
+Unpack `D2Engine-<version>-ARM.zip`. It contains:
 
 - `Descent2_<version>_ARM.appx` – the game
 - `Descent2.cer` – the certificate the package is signed with
 - `Dependencies/` – `Microsoft.VCLibs.ARM.14.00.appx` (the C++ runtime) and `MidiVoices.appx` (the General MIDI sound set for the music)
-
-### On the phone
 
 1. Turn on developer mode: **Settings → Update & security → For developers → Developer mode**.
 2. Copy the unpacked folder to the phone (over USB, to the phone storage or the SD card).
@@ -29,12 +31,25 @@ Download the latest release from the [Releases](../../releases) page and unpack 
 4. Open `Microsoft.VCLibs.ARM.14.00.appx` and `MidiVoices.appx` from `Dependencies` and install them. If the phone says one is already installed, skip it.
 5. Open `Descent2_<version>_ARM.appx` and install it.
 
-### From a PC
-
-With the phone connected over USB and developer mode on, `WinAppDeployCmd` from the Windows 10 SDK can install it (install the certificate on the phone first, as above):
+With the phone connected over USB and developer mode on, `WinAppDeployCmd` from the Windows 10 SDK can also install it from a PC (install the certificate on the phone first, as above):
 
     WinAppDeployCmd install -file Dependencies\MidiVoices.appx -ip 127.0.0.1
     WinAppDeployCmd install -file Descent2_<version>_ARM.appx -ip 127.0.0.1 -dependency Dependencies\Microsoft.VCLibs.ARM.14.00.appx
+
+### On a PC
+
+The x64 build runs on Windows 10 and 11 PCs. Unpack `D2Engine-<version>-x64.zip`. It contains:
+
+- `Descent2_<version>_x64.appx` – the game
+- `Descent2_<version>_x64.cer` – the certificate the package is signed with
+- `Dependencies/` – `x64/Microsoft.VCLibs.x64.14.00.appx` (the C++ runtime) and `MidiVoices.appx` (the General MIDI sound set for the music)
+- `Add-AppDevPackage.ps1` – the Visual Studio script that installs all of it
+
+1. Right-click `Add-AppDevPackage.ps1` and choose **Run with PowerShell**. The script installs the certificate (Windows asks for administrator rights once), then the dependencies and the game.
+2. If PowerShell refuses to run the script, right-click it → **Properties** → **Unblock**, or turn on developer mode (Windows 11: **Settings → System → For developers**; Windows 10: **Settings → Update & security → For developers**) and run it again.
+3. Start **D2Engine** from the Start menu.
+
+To remove it, uninstall **D2Engine** from the Start menu or **Settings → Apps**.
 
 Required Game Data
 ------------------
@@ -52,11 +67,13 @@ The app does not contain any game data. Only the PC data files are supported. Th
 
 The movies (`intro-h.mvl` or `intro-l.mvl`, `other-h.mvl` or `other-l.mvl`, `robots-h.mvl` or `robots-l.mvl`) are optional.
 
-Copy the files to a folder on the phone. On first launch the game asks for that folder (subfolders are searched too) and copies the data files into its own storage, lowercasing the names. If files are missing, it lists them and lets you pick another folder; files already copied are kept, so the data can come from more than one folder.
+Copy the files to a folder on the phone; on a PC the folder of the game itself will do (for example the Descent II folder of GOG or Steam). On first launch the game asks for that folder (subfolders are searched too) and copies the data files into its own storage, lowercasing the names. If files are missing, it lists them and lets you pick another folder; files already copied are kept, so the data can come from more than one folder.
 
 Controls
 --------
 The touch controls are those of the Android port. Taps outside the controls act as the mouse in menus and briefings (pick **Mouse** as the control type for a new pilot so taps also skip briefing pages). The hardware Back button acts as Escape.
+
+On a PC the game takes the keyboard and the mouse as the original did: keys by their position (scan codes), so the keyboard layout does not matter; the mouse steers while flying (pick **Mouse** in **Options → Controls**) and its buttons fire. The touch controls show up only after the screen is touched, and a narrow window does not turn the picture.
 
 Building
 --------
@@ -71,6 +88,10 @@ Packages are signed with `winmobile/Descent2_TemporaryKey.pfx`, which is not par
 
 The package and its dependencies end up in `AppPackages/Descent2/`.
 
+### For a PC
+
+The sideload build above with `-p:Platform=x64` makes the PC package. It ends up in `AppPackages/Descent2/` too, with `Add-AppDevPackage.ps1`, which installs it.
+
 ### Store build
 
 The Microsoft Store version is called **D2Engine** and has its own manifest, `winmobile/Package.Store.appxmanifest`, with the Partner Center identity. `StoreBuild=true` switches to it and to the Store signing key `winmobile/D2Engine_StoreKey.pfx` (not in the repository; its subject must be the Partner Center publisher), and builds in separate folders:
@@ -78,10 +99,6 @@ The Microsoft Store version is called **D2Engine** and has its own manifest, `wi
     MSBuild Descent2-WinMobile.sln -p:Configuration=Release -p:Platform=ARM -p:StoreBuild=true -p:UapAppxPackageBuildMode=StoreUpload -p:AppxBundle=Always "-p:AppxBundlePlatforms=ARM|x64" -p:AppxPackageDir=<repo>\AppPackages\Store\
 
 This writes the `.appxupload` for Partner Center to `AppPackages/Store/`, with the phone (ARM) and PC (x64) packages. The store listing texts and submission notes are in `store/listing.md`.
-
-### On a PC
-
-The x64 build runs on Windows 10 and 11 PCs. There the game takes the keyboard and the mouse as the original did: keys by their position (scan codes), the mouse steers while flying (pick **Mouse** in **Options → Controls**) and its buttons fire. The touch controls show up only after the screen is touched, and a narrow window does not turn the picture.
 
 ### How it is put together
 
