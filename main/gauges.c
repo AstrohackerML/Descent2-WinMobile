@@ -1796,8 +1796,20 @@ void show_time() {
 		Color_0_31_0 = gr_getcolor(0, 31, 0);
 	gr_set_fontcolor(Color_0_31_0, -1);
 
+#ifdef WINMOBILE
+	// In the bottom right corner of the screen, under the frame rate
+	{
+		char text[16];
+		int w, h, aw;
+
+		sprintf(text, "%d:%02d", mins, secs);
+		gr_get_string_size(text, &w, &h, &aw);
+		gr_string(grd_curcanv->cv_w - w - h / 2, grd_curcanv->cv_h - h - h / 2, text);
+	}
+#else
 	gr_printf((int) (grd_curcanv->cv_w - f2fl(Scale_factor) * 4 * GAME_FONT->ft_w),
 			  grd_curcanv->cv_h - 4 * Line_spacing, "%d:%02d", mins, secs);
+#endif
 }
 
 #endif
@@ -3228,11 +3240,9 @@ void draw_hud() {
 			}
 		}
 
-#ifdef NETWORK
-#ifndef RELEASE
+#if defined(NETWORK) && !defined(RELEASE) && !defined(WINMOBILE)	// drawn over the cockpit there
 		if (!(Game_mode & GM_MULTI && Show_kill_list) && !Saving_movie_frames)
 			show_time();
-#endif
 #endif
 		if (Reticle_on && Cockpit_mode != CM_LETTERBOX && (!Use_player_head_angles))
 			show_reticle(0);

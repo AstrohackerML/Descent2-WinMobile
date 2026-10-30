@@ -74,8 +74,8 @@ void init_buttons(int w, int h) {
 	menuSpacing = (w - 250) / 7;
 
 	// Define buttons
-	buttons[ACCELERATE_BTN] = (struct GameButton) {120, h - 185, 55, 55, {KEY_A}, 1, true};
-	buttons[REVERSE_BTN] = (struct GameButton) {120, h - 75, 55, 55, {KEY_Z}, 1, true};
+	buttons[ACCELERATE_BTN] = (struct GameButton) {120, h - 185, 55, 55, {KEY_W}, 1, true};
+	buttons[REVERSE_BTN] = (struct GameButton) {120, h - 75, 55, 55, {KEY_S}, 1, true};
 	buttons[SLIDE_LEFT_BTN] = (struct GameButton) {65, h - 130, 55, 55, {KEY_PAD1}, 1, true};
 	buttons[SLIDE_RIGHT_BTN] = (struct GameButton) {175, h - 130, 55, 55, {KEY_PAD3}, 1, true};
 	buttons[SLIDE_UP_BTN] = (struct GameButton) {25, h - 185, 35, 80, {KEY_PADMINUS}, 1, true};
@@ -83,12 +83,12 @@ void init_buttons(int w, int h) {
 	buttons[BANK_LEFT_BTN] = (struct GameButton) {65, h - 225, 80, 35, {KEY_Q}, 1, true};
 	buttons[BANK_RIGHT_BTN] = (struct GameButton) {150, h - 225, 80, 35, {KEY_E}, 1, true};
 	buttons[ACCELERATE_SLIDE_LEFT_BTN] = (struct GameButton) {65, h - 185, 55, 55,
-															  {KEY_A, KEY_PAD1}, 2, true};
+															  {KEY_W, KEY_PAD1}, 2, true};
 	buttons[ACCELERATE_SLIDE_RIGHT_BTN] = (struct GameButton) {175, h - 185, 55, 55,
-															   {KEY_A, KEY_PAD3}, 2, true};
-	buttons[REVERSE_SLIDE_LEFT_BTN] = (struct GameButton) {65, h - 75, 55, 55, {KEY_Z, KEY_PAD1}, 2,
+															   {KEY_W, KEY_PAD3}, 2, true};
+	buttons[REVERSE_SLIDE_LEFT_BTN] = (struct GameButton) {65, h - 75, 55, 55, {KEY_S, KEY_PAD1}, 2,
 														   true};
-	buttons[REVERSE_SLIDE_RIGHT_BTN] = (struct GameButton) {175, h - 75, 55, 55, {KEY_Z, KEY_PAD3},
+	buttons[REVERSE_SLIDE_RIGHT_BTN] = (struct GameButton) {175, h - 75, 55, 55, {KEY_S, KEY_PAD3},
 															2, true};
 	buttons[FIRE_PRIMARY_BTN] = (struct GameButton) {w - 95, h - 170, 70, 70, {KEY_LCTRL}, 1,
 													 false};
@@ -201,7 +201,7 @@ void handle_down(int pointerId, float x, float y) {
 				if (i == ACCELERATE_BTN) {
 					accelerateTime = timer_get_fixed_seconds();
 					if (accelerateTime - accelerateLastTouched < fl2f(0.5)) {
-						key_handler(KEY_S, true);
+						key_handler(KEY_LSHIFT, true);
 					}
 					accelerateLastTouched = timer_get_fixed_seconds();
 				}
@@ -224,7 +224,7 @@ void handle_up(int pointerId) {
 	}
 	for (int i = 0; i < buttons[buttonNumber].nKeys; ++i) {
 		if (buttonNumber == ACCELERATE_BTN) {
-			key_handler(KEY_S, false);
+			key_handler(KEY_LSHIFT, false);
 		}
 		key_handler(buttons[buttonNumber].keys[i], false);
 	}

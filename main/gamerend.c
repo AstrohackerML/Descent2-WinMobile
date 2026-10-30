@@ -170,6 +170,8 @@ void ftoa(char *string, fix f)
 	sprintf( string, "%d.%02d", decimal, fractional );
 }
 
+void show_time(void);		// gauges.c
+
 void show_framerate()
 {
 	fix rate;
@@ -183,7 +185,19 @@ void show_framerate()
 	gr_set_curfont( GAME_FONT );	
 	gr_set_fontcolor(gr_getcolor(0,31,0),-1 );
 
+#ifdef WINMOBILE
+	// In the bottom right corner of the screen, over the level time
+	{
+		char text[16];
+		int w, h, aw;
+
+		sprintf(text, "FPS: %.2f", f2fl(rate));
+		gr_get_string_size(text, &w, &h, &aw);
+		gr_string(grd_curcanv->cv_w - w - h / 2, grd_curcanv->cv_h - 2 * h - h / 4 - h / 2, text);
+	}
+#else
 	gr_printf(grd_curcanv->cv_w-(7*GAME_FONT->ft_w)*f2fl(Scale_factor),grd_curcanv->cv_h-6*(GAME_FONT->ft_h+GAME_FONT->ft_h/4)*f2fl(Scale_factor),"FPS: %.2f ", f2fl(rate) );
+#endif
 //   if ( !( q++ % 30 ) )
 //      mprintf( (0,"fps: %s\n", temp ) );
 }
@@ -385,8 +399,10 @@ mprintf((0,"line_spacing=%d ",line_spacing));
 	arcade_frame_info();
 	#endif
 
+#ifndef WINMOBILE	// drawn over the cockpit there, see game_render_frame_mono
 	if (framerate_on)
 		show_framerate();
+#endif
 
 	if ( Newdemo_state == ND_STATE_PLAYBACK )
 		Game_mode = Newdemo_game_mode;
@@ -1523,6 +1539,21 @@ void game_render_frame_mono(void)
 		if ( Newdemo_state == ND_STATE_PLAYBACK )
 			Game_mode = GM_NORMAL;
 	}
+
+#ifdef WINMOBILE
+	// The frame rate and the level time go in the bottom right corner of the
+	// screen, drawn after the cockpit so it does not cover them
+	if (!no_draw_hud) {
+		grs_canvas *save_canv = grd_curcanv;
+
+		gr_set_current_canvas(NULL);
+		if (framerate_on)
+			show_framerate();
+		if (!(Game_mode & GM_MULTI && Show_kill_list) && !Saving_movie_frames)
+			show_time();
+		gr_set_current_canvas(save_canv);
+	}
+#endif
 
 #ifdef WINDOWS
 	if (win_flip) {
