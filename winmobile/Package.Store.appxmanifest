@@ -10,7 +10,7 @@
   <Identity
     Name="AstrohackerML.D2Engine"
     Publisher="CN=731ECEE4-03DC-405A-B788-3758C0ED0488"
-    Version="1.0.1.0" />
+    Version="1.0.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="90858d94-5545-4342-bc93-c1c08cbf444d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

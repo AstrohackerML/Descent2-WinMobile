@@ -1,6 +1,6 @@
 # D2Engine — данные для отправки в Microsoft Store
 
-Пакет: `AppPackages\Store\Descent2_1.0.1.0_ARM_x64_bundle.appxupload` (ARM для телефона и x64 для ПК) (собирается командой из README, раздел «Store build»).
+Пакет: `AppPackages\Store\Descent2_1.0.2.0_ARM_x64_bundle.appxupload` (ARM для телефона и x64 для ПК) (собирается командой из README, раздел «Store build»).
 
 Идентификатор в манифесте (`winmobile/Package.Store.appxmanifest`): `AstrohackerML.D2Engine`, издатель `CN=731ECEE4-03DC-405A-B788-3758C0ED0488`. Перед первой отправкой зарезервируйте в Partner Center имя **D2Engine** и сверьте значения в **Product management → Product identity**: `Package/Identity/Name` и `Package/Identity/Publisher` должны совпасть с манифестом. Если Partner Center выдал другое имя пакета, поправьте `Name` в манифесте и пересоберите.
 
@@ -76,7 +76,7 @@ Descent, Descent II, шутер, 6DOF, ретро, Windows 10 Mobile, порт
 
 **Что нового**
 
-Первая версия.
+Версия 1.0.2: при каждом запуске можно выбрать управление — сенсорный экран или клавиатура и мышь, на любом устройстве. На планшете можно играть касаниями, а на телефоне с Bluetooth-клавиатурой и мышью — как на ПК. Клавиши по умолчанию: W/S — вперёд и назад, A/D — сдвиг, Q/E — крен, левый Shift — форсаж; мышь управляет кораблём как в шутерах.
 
 **Авторские права**
 
@@ -122,7 +122,7 @@ Descent, Descent II, shooter, 6DOF, retro, Windows 10 Mobile, port
 
 **What's new**
 
-First version.
+Version 1.0.2: pick the controls on every launch, the touch screen or the keyboard and the mouse, on any device. A tablet can play with touch, and a phone with a Bluetooth keyboard and mouse can play like a PC. The default keys are W/S to fly forward and back, A/D to slide, Q/E to bank and Left Shift for the afterburner; the mouse steers as in shooters.
 
 **Copyright**
 
