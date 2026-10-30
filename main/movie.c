@@ -358,7 +358,7 @@ int RunMovie(char *filename, int hires_flag, int must_have,int dx,int dy)
 		mouse = mouse_button_down_count(MB_LEFT, &x, &y);
 
 		// If ESCAPE pressed, then quit movie.
-		if (mouse) {
+		if (mouse || key_inkey() == KEY_ESC) {
 			result = aborted = 1;
 			break;
 		}

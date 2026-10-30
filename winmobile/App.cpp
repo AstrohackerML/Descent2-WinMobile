@@ -1,6 +1,7 @@
-// UWP app shell: owns the window, feeds touch and the back button to the
-// game, gets the game data in place and runs Descent on its own thread. On a
-// PC it also feeds the keyboard and the mouse.
+// UWP app shell: owns the window, feeds touch, the keyboard, the mouse and
+// the back button to the game, gets the game data in place and runs Descent
+// on its own thread. Each launch the player picks the touch controls or the
+// keyboard and the mouse, whatever the device.
 
 #include <atomic>
 #include <collection.h>
@@ -47,7 +48,7 @@ std::string Document_path_utf8, Cache_path_utf8, Data_path_utf8;
 // The mouse's movement while flying, taken by the game thread every frame
 std::atomic<int> Mouse_dx{0}, Mouse_dy{0};
 
-// A PC, as opposed to the phone: keyboard, mouse and a window of any shape
+// A PC, as opposed to the phone: a window of any shape
 bool is_desktop() {
 	return AnalyticsInfo::VersionInfo->DeviceFamily == L"Windows.Desktop";
 }
@@ -77,6 +78,45 @@ bool is_data_file(const std::wstring &name) {
 		}
 	}
 	return false;
+}
+
+// PC scan codes for keyboards that report none, by virtual key
+unsigned char scan_code_of(VirtualKey key) {
+	static const std::map<VirtualKey, unsigned char> codes = {
+		{VirtualKey::Escape, 0x01}, {VirtualKey::Number1, 0x02}, {VirtualKey::Number2, 0x03},
+		{VirtualKey::Number3, 0x04}, {VirtualKey::Number4, 0x05}, {VirtualKey::Number5, 0x06},
+		{VirtualKey::Number6, 0x07}, {VirtualKey::Number7, 0x08}, {VirtualKey::Number8, 0x09},
+		{VirtualKey::Number9, 0x0A}, {VirtualKey::Number0, 0x0B}, {VirtualKey::Back, 0x0E},
+		{VirtualKey::Tab, 0x0F}, {VirtualKey::Q, 0x10}, {VirtualKey::W, 0x11},
+		{VirtualKey::E, 0x12}, {VirtualKey::R, 0x13}, {VirtualKey::T, 0x14},
+		{VirtualKey::Y, 0x15}, {VirtualKey::U, 0x16}, {VirtualKey::I, 0x17},
+		{VirtualKey::O, 0x18}, {VirtualKey::P, 0x19}, {VirtualKey::Enter, 0x1C},
+		{VirtualKey::Control, 0x1D}, {VirtualKey::LeftControl, 0x1D}, {VirtualKey::A, 0x1E},
+		{VirtualKey::S, 0x1F}, {VirtualKey::D, 0x20}, {VirtualKey::F, 0x21},
+		{VirtualKey::G, 0x22}, {VirtualKey::H, 0x23}, {VirtualKey::J, 0x24},
+		{VirtualKey::K, 0x25}, {VirtualKey::L, 0x26}, {VirtualKey::Shift, 0x2A},
+		{VirtualKey::LeftShift, 0x2A}, {VirtualKey::Z, 0x2C}, {VirtualKey::X, 0x2D},
+		{VirtualKey::C, 0x2E}, {VirtualKey::V, 0x2F}, {VirtualKey::B, 0x30},
+		{VirtualKey::N, 0x31}, {VirtualKey::M, 0x32}, {VirtualKey::RightShift, 0x36},
+		{VirtualKey::Multiply, 0x37}, {VirtualKey::Menu, 0x38}, {VirtualKey::LeftMenu, 0x38},
+		{VirtualKey::Space, 0x39}, {VirtualKey::CapitalLock, 0x3A}, {VirtualKey::F1, 0x3B},
+		{VirtualKey::F2, 0x3C}, {VirtualKey::F3, 0x3D}, {VirtualKey::F4, 0x3E},
+		{VirtualKey::F5, 0x3F}, {VirtualKey::F6, 0x40}, {VirtualKey::F7, 0x41},
+		{VirtualKey::F8, 0x42}, {VirtualKey::F9, 0x43}, {VirtualKey::F10, 0x44},
+		{VirtualKey::NumberPad7, 0x47}, {VirtualKey::NumberPad8, 0x48},
+		{VirtualKey::NumberPad9, 0x49}, {VirtualKey::Subtract, 0x4A},
+		{VirtualKey::NumberPad4, 0x4B}, {VirtualKey::NumberPad5, 0x4C},
+		{VirtualKey::NumberPad6, 0x4D}, {VirtualKey::Add, 0x4E}, {VirtualKey::NumberPad1, 0x4F},
+		{VirtualKey::NumberPad2, 0x50}, {VirtualKey::NumberPad3, 0x51},
+		{VirtualKey::NumberPad0, 0x52}, {VirtualKey::Decimal, 0x53}, {VirtualKey::F11, 0x57},
+		{VirtualKey::F12, 0x58}, {VirtualKey::RightControl, 0x9D}, {VirtualKey::Divide, 0xB5},
+		{VirtualKey::RightMenu, 0xB8}, {VirtualKey::Home, 0xC7}, {VirtualKey::Up, 0xC8},
+		{VirtualKey::PageUp, 0xC9}, {VirtualKey::Left, 0xCB}, {VirtualKey::Right, 0xCD},
+		{VirtualKey::End, 0xCF}, {VirtualKey::Down, 0xD0}, {VirtualKey::PageDown, 0xD1},
+		{VirtualKey::Insert, 0xD2}, {VirtualKey::Delete, 0xD3},
+	};
+	auto it = codes.find(key);
+	return it == codes.end() ? 0 : it->second;
 }
 
 void press_key(unsigned char key) {
@@ -208,10 +248,17 @@ public:
 		CreateEditContext();
 		the_app = this;
 
-		desktop_ = is_desktop();
-		if (desktop_) {
-			SetUpDesktop();
+		// A PC window may be narrow without being a turned phone
+		if (is_desktop()) {
+			gles_set_turn_portrait(false);
 		}
+
+		// A hardware keyboard works with either controls
+		dispatcher_->AcceleratorKeyActivated +=
+				ref new TypedEventHandler<CoreDispatcher ^, AcceleratorKeyEventArgs ^>(
+						this, &App::OnAcceleratorKey);
+		window_->Activated += ref new TypedEventHandler<CoreWindow ^, WindowActivatedEventArgs ^>(
+				this, &App::OnWindowActivated);
 	}
 
 	virtual void Load(String ^entryPoint) {
@@ -226,19 +273,51 @@ public:
 	}
 
 private:
-	// A PC plays with the keyboard and the mouse as the original game did; the
-	// touch controls only show up once the screen is touched
-	void SetUpDesktop() {
-		gles_set_turn_portrait(false);
+	// Asks every launch how the player will play: the touch controls or the
+	// keyboard and the mouse. The device only picks the default answer.
+	void ChooseControls() {
+		bool ru = prefers_russian();
+		MessageDialog ^dialog = ref new MessageDialog(
+				ru ? L"\u041a\u0430\u043a \u0431\u0443\u0434\u0435\u0442\u0435 "
+					 L"\u0438\u0433\u0440\u0430\u0442\u044c?"
+				   : L"How will you play?",
+				ru ? L"\u0423\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435" : L"Controls");
+		dialog->Commands->Append(ref new UICommand(
+				ru ? L"\u0421\u0435\u043d\u0441\u043e\u0440\u043d\u044b\u0439 "
+					 L"\u044d\u043a\u0440\u0430\u043d"
+				   : L"Touch screen", nullptr, 0));
+		dialog->Commands->Append(ref new UICommand(
+				ru ? L"\u041a\u043b\u0430\u0432\u0438\u0430\u0442\u0443\u0440\u0430 "
+					 L"\u0438 \u043c\u044b\u0448\u044c"
+				   : L"Keyboard and mouse", nullptr, 1));
+		unsigned int default_choice = is_desktop() ? 1 : 0;
+		dialog->DefaultCommandIndex = default_choice;
+		dialog->CancelCommandIndex = default_choice;
+		create_task(dialog->ShowAsync()).then([this, default_choice](task<IUICommand ^> t) {
+			int choice = (int) default_choice;
+			try {
+				IUICommand ^command = t.get();
+				if (command) {
+					choice = safe_cast<int>(command->Id);
+				}
+			} catch (Exception ^) {
+				// Closed some other way: the default stands
+			}
+			if (choice == 1) {
+				SetUpKeyboardMouse();
+			}
+			TryStart();
+		}, task_continuation_context::use_current());
+	}
+
+	// The keyboard and the mouse as the original game had them: the mouse
+	// steers and fires while flying, and the touch controls stay hidden
+	void SetUpKeyboardMouse() {
+		keyboard_mouse_ = true;
 		Relative_mouse = 1;
 		Touch_controls_shown = 0;
 		arrow_ = window_->PointerCursor;
 
-		dispatcher_->AcceleratorKeyActivated +=
-				ref new TypedEventHandler<CoreDispatcher ^, AcceleratorKeyEventArgs ^>(
-						this, &App::OnAcceleratorKey);
-		window_->Activated += ref new TypedEventHandler<CoreWindow ^, WindowActivatedEventArgs ^>(
-				this, &App::OnWindowActivated);
 		MouseDevice::GetForCurrentView()->MouseMoved +=
 				ref new TypedEventHandler<MouseDevice ^, MouseEventArgs ^>(this, &App::OnMouseMoved);
 
@@ -298,11 +377,13 @@ private:
 		CorePhysicalKeyStatus status = args->KeyStatus;
 		unsigned char code = (unsigned char) ((status.ScanCode & 0x7F) |
 											  (status.IsExtendedKey ? 0x80 : 0));
-		if (!started_ || (status.ScanCode & 0x7F) == 0) {
+		if ((status.ScanCode & 0x7F) == 0) {
+			code = scan_code_of(args->VirtualKey);
+		}
+		if (!started_ || code == 0) {
 			return;
 		}
 		if (down) {
-			Touch_controls_shown = 0;
 			if (!text_active_) {
 				pressed_keys_.insert(code);
 				key_handler(code, true);
@@ -341,7 +422,7 @@ private:
 
 		if (have_data()) {
 			data_ready_ = true;
-			TryStart();
+			ChooseControls();
 			return;
 		}
 
@@ -382,7 +463,7 @@ private:
 				return;
 			}
 			data_ready_ = true;
-			TryStart();
+			ChooseControls();
 		}, task_continuation_context::use_current());
 	}
 
@@ -489,9 +570,8 @@ private:
 		if (!started_) {
 			return;
 		}
-		if (desktop_) {
+		if (keyboard_mouse_) {
 			bool mouse = point->PointerDevice->PointerDeviceType == PointerDeviceType::Mouse;
-			Touch_controls_shown = !mouse;
 			if (mouse && flying_) {
 				PointerPointProperties ^buttons = point->Properties;
 				SetMouseButtons(buttons->IsLeftButtonPressed, buttons->IsRightButtonPressed,
@@ -595,8 +675,8 @@ private:
 	}
 
 	void OnKeyDown(CoreWindow ^sender, KeyEventArgs ^args) {
-		// On a PC the keys are passed on in OnAcceleratorKey, except while typing
-		if (!started_ || (desktop_ && !text_active_)) {
+		// The keys are passed on in OnAcceleratorKey, except while typing
+		if (!started_ || !text_active_) {
 			return;
 		}
 		if (args->VirtualKey == VirtualKey::Enter) {
@@ -655,8 +735,8 @@ private:
 	bool data_ready_ = false;
 	bool started_ = false;
 
-	// PC only
-	bool desktop_ = false;
+	// Keyboard and mouse controls only
+	bool keyboard_mouse_ = false;
 	bool flying_ = false;
 	bool mouse_buttons_[3] = {};
 	std::set<unsigned char> pressed_keys_;

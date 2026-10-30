@@ -156,7 +156,10 @@ RetrySelection:
 			control_choice = Config_control_type;				// Assume keyboard
 		#endif
 	
-		#ifndef APPLE_DEMO
+		#if defined(WINMOBILE)
+			// The app asks for touch or keyboard and mouse at launch; both
+			// steer through the mouse, so there is nothing to ask here
+		#elif !defined(APPLE_DEMO)
 			control_choice = newmenu_do1( NULL, TXT_CHOOSE_INPUT, i, m, NULL, control_choice );
 		#else
 			control_choice = 0;

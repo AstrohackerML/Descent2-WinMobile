@@ -8,7 +8,7 @@
   <Identity
     Name="AstrohackerML.Descent2WinMobile"
     Publisher="CN=AstrohackerML"
-    Version="0.3.1.0" />
+    Version="0.3.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="fd7aaa5a-642b-4c9e-b622-9f6070feeabf" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

@@ -73,9 +73,11 @@ Copy the files to a folder on the phone; on a PC the folder of the game itself w
 
 Controls
 --------
-The touch controls are those of the Android port. Taps outside the controls act as the mouse in menus and briefings (pick **Mouse** as the control type for a new pilot so taps also skip briefing pages). The hardware Back button acts as Escape.
+On every launch the game asks how you will play: with the touch screen or with the keyboard and the mouse, whatever the device (a tablet, a phone with a Bluetooth keyboard and mouse, a PC). A new pilot always gets the mouse as the control type, so there is no control menu to go through.
 
-On a PC the game takes the keyboard and the mouse as the original did: keys by their position (scan codes), so the keyboard layout does not matter; the mouse steers while flying (pick **Mouse** in **Options → Controls**) and its buttons fire. The touch controls show up only after the screen is touched, and a narrow window does not turn the picture.
+With the touch screen the controls are those of the Android port. Taps outside the controls act as the mouse in menus and briefings. The hardware Back button acts as Escape.
+
+With the keyboard and the mouse the game takes them as the original did, and the touch controls stay hidden. Keys go by their position (scan codes), so the keyboard layout does not matter. While flying the mouse steers, its buttons fire and its pointer is hidden; in menus it is the pointer again. Esc also skips movies. On a PC a narrow window does not turn the picture.
 
 Building
 --------
