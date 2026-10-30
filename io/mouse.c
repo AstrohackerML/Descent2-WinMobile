@@ -248,6 +248,9 @@ void mouse_get_delta( int *dx, int *dy, int *dz)
 #ifdef WINMOBILE
 	if (Relative_mouse) {
 		take_mouse_delta(dx, dy);
+		// Pushing the mouse away lifts the nose, as in shooters; the
+		// game's own Pitch U/D invert brings back the flight stick
+		*dy = -*dy;
 		*dz = 0;
 		return;
 	}
